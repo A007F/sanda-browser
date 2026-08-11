@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanda Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="tab-bar">
+    <div class="tab active" id="tab-1">
+      <span class="tab-title">&#1578;&#1576;&#1608;&#1610;&#1576; &#1580;&#1583;&#1610;&#1583;</span>
+      <button class="tab-close">&#10005;</button>
+    </div>
+    <button id="btn-new-tab">+</button>
+  </div>
+
+  <div id="navbar">
+    <!-- Privacy Shield Panel -->
+<div id="shield-panel" class="hidden">
+  <div class="shield-header">
+    <span>🛡 Privacy Shield</span>
+    <button id="shield-close">✕</button>
+  </div>
+
+  <div class="shield-section">
+    <div class="shield-row">
+      <span>Block Tracking Ads</span>
+      abel class="toggle">
+        <input type="checkbox" id="toggle-ads" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="shield-row">
+      <span>Block Invisible Trackers</span>
+      abel class="toggle">
+        <input type="checkbox" id="toggle-trackers" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="shield-row">
+      <span>Fingerprint Protection</span>
+      abel class="toggle">
+        <input type="checkbox" id="toggle-fingerprint" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="shield-section">
+    <div class="shield-label">Window Opacity</div>
+    <input type="range" id="opacity-slider" min="50" max="100" value="100">
+    <span id="opacity-value">100%</span>
+  </div>
+</div>
+
+    <button class="nav-btn" id="btn-back" disabled>&#8592;</button>
+    <button class="nav-btn" id="btn-forward" disabled>&#8594;</button>
+    <button class="nav-btn" id="btn-refresh">&#8635;</button>
+
+    <div id="url-wrapper">
+      <span id="url-icon">&#128274;</span>
+      <input id="url-bar" type="text" placeholder="Enter URL or search...">
+    </div>
+    <button id="btn-shield" title="Privacy Shield">🛡</button>
+
+    <button id="btn-go">Go</button>
+  </div>
+
+  <div id="content-area">
+    <div id="home-page">
+      <h1 id="browser-logo">Sanda</h1>
+      <input id="home-search" type="text" placeholder="Search or enter URL...">
+      <button id="home-search-btn">Search</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

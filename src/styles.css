@@ -1,0 +1,238 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-primary: #1e1e2e;
+  --bg-secondary: #2a2a3d;
+  --bg-tab: #313145;
+  --accent: #7c6af7;
+  --accent-hover: #9d8fff;
+  --text-primary: #cdd6f4;
+  --text-muted: #6c7086;
+  --border: #45475a;
+  --radius: 8px;
+}
+
+html, body {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+#tab-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: var(--bg-secondary);
+  padding: 6px 8px 0;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.tab {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-tab);
+  padding: 5px 12px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  font-size: 13px;
+  cursor: pointer;
+  max-width: 180px;
+  min-width: 100px;
+}
+
+.tab.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.tab-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tab-close {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 11px;
+  opacity: 0.6;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.tab-close:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+#btn-new-tab {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0 8px;
+  border-radius: var(--radius);
+  line-height: 1;
+}
+
+#btn-new-tab:hover {
+  color: var(--accent-hover);
+}
+
+#navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: var(--bg-secondary);
+  padding: 8px 12px;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.nav-btn {
+  background: var(--bg-tab);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 14px;
+  flex-shrink: 0;
+  height: 34px;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#url-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0 10px;
+  gap: 8px;
+  height: 34px;
+}
+
+#url-wrapper:focus-within {
+  border-color: var(--accent);
+}
+
+#url-icon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+#url-bar {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  direction: ltr;
+  text-align: left;
+}
+
+#btn-go {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  padding: 7px 16px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 13px;
+  flex-shrink: 0;
+  height: 34px;
+}
+
+#btn-go:hover {
+  background: var(--accent-hover);
+}
+
+#content-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+#home-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: var(--bg-primary);
+}
+
+#browser-logo {
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: 6px;
+}
+
+#home-search {
+  width: 500px;
+  max-width: 90vw;
+  padding: 14px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  color: var(--text-primary);
+  font-size: 16px;
+  outline: none;
+  direction: ltr;
+  text-align: left;
+}
+
+#home-search:focus {
+  border-color: var(--accent);
+}
+
+#home-search-btn {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  padding: 12px 40px;
+  border-radius: 30px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+#home-search-btn:hover {
+  background: var(--accent-hover);
+}

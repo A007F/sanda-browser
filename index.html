@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sanda Browser</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- شريط التبويبات -->
+  <div id="tab-bar">
+    <div class="tab active" id="tab-1">
+      <span class="tab-title">تبويب جديد</span>
+      <button class="tab-close">✕</button>
+    </div>
+    <button id="btn-new-tab">+</button>
+  </div>
+
+  <!-- شريط التنقل -->
+  <div id="navbar">
+    <button class="nav-btn" id="btn-back" disabled>&#8592;</button>
+    <button class="nav-btn" id="btn-forward" disabled>&#8594;</button>
+    <button class="nav-btn" id="btn-refresh">&#8635;</button>
+
+    <div id="url-wrapper">
+      <span id="url-icon">🔒</span>
+      <input id="url-bar" type="text" placeholder="أدخل رابطاً أو ابحث...">
+    </div>
+
+    <button class="nav-btn" id="btn-go">انتقال</button>
+  </div>
+
+  <!-- منطقة المحتوى -->
+  <div id="content-area">
+    <!-- صفحة البداية -->
+    <div id="home-page">
+      <h1 id="browser-logo">Sanda</h1>
+      <input id="home-search" type="text" placeholder="ابحث أو أدخل رابطاً...">
+      <button id="home-search-btn">بحث</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

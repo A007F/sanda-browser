@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>Browser Controls</title>
+  >
+</head>
+<body>
+
+  <!-- شريط الأدوات -->
+  <div id="controls-bar">
+    <!-- يسار: التنقل -->
+    <div id="nav-controls">
+      <button class="ctrl-btn" id="btn-back" title="رجوع">&#8592;</button>
+      <button class="ctrl-btn" id="btn-forward" title="أمام">&#8594;</button>
+      <button class="ctrl-btn" id="btn-refresh" title="تحديث">&#8635;</button>
+    </div>
+
+    <!-- يمين: الأدوات -->
+    <div id="tool-controls">
+      <button class="ctrl-btn" id="btn-bookmark" title="مفضلة">★</button>
+      <button class="ctrl-btn" id="btn-privacy" title="درع الخصوصية">🛡</button>
+      <button class="ctrl-btn" id="btn-settings" title="إعدادات">⚙</button>
+    </div>
+  </div>
+
+  <!-- منطقة WebView ستملأ باقي المساحة -->
+  <div id="webview-area"></div>
+
+  <script src="browser.js"></script>
+</body>
+</html>
