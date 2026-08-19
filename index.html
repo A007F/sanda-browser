@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sanda Browser</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- شريط التبويبات -->
   <div id="tab-bar">
     <div class="tab active" id="tab-1">
-      <span class="tab-title">تبويب جديد</span>
+      <span class="tab-title" data-i18n="new_tab">تبويب جديد</span>
       <button class="tab-close">✕</button>
     </div>
     <button id="btn-new-tab">+</button>
@@ -20,20 +19,23 @@
   <!-- شريط التنقل -->
   <div id="navbar">
     <div class="nav-group">
-      <button class="nav-btn" id="btn-back" title="للخلف" disabled>
+      <button class="nav-btn" id="btn-back" title="للخلف" data-i18n-title="back" disabled>
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       </button>
-      <button class="nav-btn" id="btn-forward" title="للأمام" disabled>
+      <button class="nav-btn" id="btn-forward" title="للأمام" data-i18n-title="forward" disabled>
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </button>
-      <button class="nav-btn" id="btn-refresh" title="تحديث">
+      <button class="nav-btn" id="btn-refresh" title="تحديث" data-i18n-title="refresh">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
       </button>
-      <button class="nav-btn" id="btn-home" title="الصفحة الرئيسية">
+      <button class="nav-btn" id="btn-home" title="الصفحة الرئيسية" data-i18n-title="home">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       </button>
-      <button class="nav-btn" id="btn-history-toggle" title="السجل">
+      <button class="nav-btn" id="btn-history-toggle" title="السجل" data-i18n-title="history">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </button>
+      <button class="nav-btn" id="btn-downloads-toggle" title="التنزيلات" data-i18n-title="downloads">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
       </button>
     </div>
 
@@ -42,41 +44,51 @@
         <svg id="icon-lock" class="status-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#4ade80" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
         <svg id="icon-warning" class="status-icon hidden" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#f87171" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01"/></svg>
       </div>
-      <input id="url-bar" type="text" placeholder="أدخل رابطاً أو ابحث في Startpage...">
+      <input id="url-bar" type="text" placeholder="أدخل رابطاً أو ابحث في Startpage..." data-i18n-placeholder="url_placeholder">
     </div>
 
     <div class="nav-group">
-      <button class="nav-btn" id="btn-shield" title="درع الخصوصية">
+      <button class="nav-btn" id="btn-shield" title="درع الخصوصية" data-i18n-title="privacy_shield">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </button>
-      <button class="nav-btn primary" id="btn-go">انتقال</button>
+      <button class="nav-btn" id="btn-settings-toggle" title="الإعدادات" data-i18n-title="settings">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <button class="nav-btn primary" id="btn-go" data-i18n="go">انتقال</button>
     </div>
   </div>
 
   <!-- لوحة الدرع -->
   <div id="shield-panel" class="hidden">
     <div class="shield-header">
-      <span>🛡 درع الخصوصية</span>
+      <span>🛡 <span data-i18n="privacy_shield">درع الخصوصية</span></span>
       <button id="shield-close">✕</button>
     </div>
     <div class="shield-section">
       <div class="shield-row">
-        <span>حجب الإعلانات</span>
+        <span data-i18n="block_ads">حجب الإعلانات</span>
         <label class="toggle">
           <input type="checkbox" id="toggle-ads" checked>
           <span class="slider"></span>
         </label>
       </div>
       <div class="shield-row">
-        <span>حجب التتبع</span>
+        <span data-i18n="block_trackers">حجب التتبع</span>
         <label class="toggle">
           <input type="checkbox" id="toggle-trackers" checked>
           <span class="slider"></span>
         </label>
       </div>
+      <div class="shield-row">
+        <span data-i18n="anti_fingerprint">حماية من البصمة</span>
+        <label class="toggle">
+          <input type="checkbox" id="setting-high-security" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
     </div>
     <div class="shield-section">
-      <div class="shield-label">شفافية النافذة</div>
+      <div class="shield-label" data-i18n="opacity">شفافية النافذة</div>
       <input type="range" id="opacity-slider" min="50" max="100" value="100">
       <span id="opacity-value">100%</span>
     </div>
@@ -89,8 +101,8 @@
       <div id="home-center">
         <h1 id="browser-logo">Sanda</h1>
         <div id="search-container">
-          <input id="home-search" type="text" placeholder="ابحث أو أدخل رابطاً...">
-          <button id="home-search-btn">بحث</button>
+          <input id="home-search" type="text" placeholder="ابحث أو أدخل رابطاً..." data-i18n-placeholder="search_placeholder">
+          <button id="home-search-btn" data-i18n="search">بحث</button>
         </div>
 
         <div id="speed-dial">
@@ -100,10 +112,69 @@
 
       <div id="history-sidebar" class="hidden">
         <div class="sidebar-header">
-          <span>السجل</span>
+          <span data-i18n="history">السجل</span>
           <button id="btn-close-history">✕</button>
         </div>
+        <div class="sidebar-search">
+          <input type="text" id="history-search-input" placeholder="بحث في السجل..." data-i18n-placeholder="history_search">
+        </div>
         <div id="history-list"></div>
+        <div class="sidebar-footer">
+          <button id="btn-clear-history" data-i18n="clear_history">مسح السجل</button>
+        </div>
+      </div>
+
+      <div id="downloads-sidebar" class="hidden">
+        <div class="sidebar-header">
+          <span data-i18n="downloads">التنزيلات</span>
+          <button id="btn-close-downloads">✕</button>
+        </div>
+        <div id="downloads-list"></div>
+        <div class="sidebar-footer">
+          <button id="btn-open-downloads-folder" data-i18n="open_folder">فتح المجلد</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة الإعدادات -->
+  <div id="settings-modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 data-i18n="settings">الإعدادات</h2>
+        <button id="btn-close-settings">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-item">
+          <label data-i18n="language">اللغة</label>
+          <select id="setting-language">
+            <option value="ar">العربية</option>
+            <option value="en">English</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <label data-i18n="search_engine">محرك البحث</label>
+          <select id="setting-search-engine">
+            <option value="https://www.startpage.com/sp/search?query=">Startpage</option>
+            <option value="https://www.google.com/search?q=">Google</option>
+            <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
+            <option value="https://www.bing.com/search?q=">Bing</option>
+          </select>
+        </div>
+        <div class="setting-item">
+          <label data-i18n="data_saver">وضع توفير البيانات</label>
+          <label class="toggle">
+            <input type="checkbox" id="setting-data-saver">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <label data-i18n="opacity">شفافية النافذة</label>
+          <input type="range" id="setting-opacity" min="10" max="100" value="100">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-save-settings" class="primary-btn" data-i18n="save_changes">حفظ التغييرات</button>
       </div>
     </div>
   </div>
