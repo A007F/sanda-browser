@@ -102,32 +102,52 @@ html, body {
   align-items: center;
   background: var(--bg-secondary);
   padding: 8px 12px;
-  gap: 8px;
+  gap: 12px;
   border-bottom: 1px solid var(--border);
-  height: 52px;
+  height: 54px;
   flex-shrink: 0;
+}
+
+.nav-group {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
 }
 
 .nav-btn {
-  background: var(--bg-tab);
-  border: 1px solid var(--border);
-  color: var(--text-primary);
-  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: var(--radius);
   cursor: pointer;
-  font-size: 14px;
-  flex-shrink: 0;
-  height: 34px;
+  transition: all 0.2s ease;
 }
 
 .nav-btn:hover:not(:disabled) {
+  background: var(--bg-tab);
+  color: var(--text-primary);
+}
+
+.nav-btn.primary {
   background: var(--accent);
-  border-color: var(--accent);
   color: #fff;
+  width: auto;
+  padding: 0 16px;
+  font-weight: 500;
+}
+
+.nav-btn.primary:hover {
+  background: var(--accent-hover);
 }
 
 .nav-btn:disabled {
-  opacity: 0.5;
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
@@ -138,19 +158,26 @@ html, body {
   align-items: center;
   background: var(--bg-primary);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0 10px;
-  gap: 8px;
-  height: 34px;
+  border-radius: 20px;
+  padding: 0 14px;
+  gap: 10px;
+  height: 38px;
+  transition: border-color 0.2s;
 }
 
 #url-wrapper:focus-within {
   border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(124, 106, 247, 0.2);
 }
 
-#url-icon {
-  font-size: 14px;
-  flex-shrink: 0;
+#url-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-icon.hidden {
+  display: none;
 }
 
 #url-bar {
@@ -164,20 +191,10 @@ html, body {
   text-align: left;
 }
 
-#btn-go {
-  background: var(--accent);
-  border: none;
-  color: #fff;
-  padding: 7px 16px;
-  border-radius: var(--radius);
-  cursor: pointer;
-  font-size: 13px;
-  flex-shrink: 0;
-  height: 34px;
-}
-
-#btn-go:hover {
-  background: var(--accent-hover);
+#url-bar::placeholder {
+  color: var(--text-muted);
+  text-align: right;
+  direction: rtl;
 }
 
 #content-area {
@@ -186,6 +203,7 @@ html, body {
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  background: var(--bg-primary);
 }
 
 #home-page {

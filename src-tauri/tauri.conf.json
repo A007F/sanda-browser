@@ -5,8 +5,8 @@
   "identifier": "com.sanda-os.sanda-browser",
   "build": {
     "beforeDevCommand": "",
-    "beforeBuildCommand": "",
-    "frontendDist": "../ui"
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
   },
   "app": {
     "withGlobalTauri": true,

@@ -15,7 +15,7 @@ function processUrl(input) {
     if (!input) return null;
     if (/^https?:\/\//i.test(input)) return input;
     if (/^[\w-]+\.[\w.]{2,}/.test(input)) return 'https://' + input;
-    return 'https://www.google.com/search?q=' + encodeURIComponent(input);
+    return 'https://www.startpage.com/sp/search?query=' + encodeURIComponent(input);
 }
 
 async function navigate(input) {

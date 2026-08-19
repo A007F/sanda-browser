@@ -1,117 +1,116 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use tauri::{Manager, WebviewUrl, WebviewWindowBuilder};
+use tauri::{AppHandle, Emitter, Manager, WebviewBuilder, WebviewUrl, LogicalPosition, LogicalSize};
+use tauri::webview::PageLoadEvent;
+use serde::{Serialize, Deserialize};
 
-fn sync_browser_to_main(app: &tauri::AppHandle) {
-    if let (Some(main), Some(browser)) = (
-        app.get_webview_window("main"),
-        app.get_webview_window("browser"),
-    ) {
-        if let (Ok(pos), Ok(size)) = (main.outer_position(), main.inner_size()) {
-            let nav_h = 95_i32;
-            let _ = browser.set_position(tauri::PhysicalPosition::new(
-                pos.x,
-                pos.y + nav_h,
-            ));
-            let _ = browser.set_size(tauri::PhysicalSize::new(
-                size.width,
-                size.height.saturating_sub(nav_h as u32),
-            ));
-        }
-    }
+#[derive(Deserialize)]
+struct Rect {
+    x: f64,
+    y: f64,
+    width: f64,
+    height: f64,
 }
 
 #[tauri::command]
-async fn navigate_to(app: tauri::AppHandle, url: String) -> Result<(), String> {
-    let parsed_url: tauri::Url = url.parse().map_err(|e| format!("{}", e))?;
+async fn navigate_to(app: AppHandle, url: String, rect: Rect) -> Result<(), String> {
+    if let Some(webview) = app.get_webview("browser") {
+        webview.navigate(url.parse().map_err(|e| format!("Invalid URL: {}", e))?)
+            .map_err(|e| e.to_string())?;
+    } else {
+        let window = app.get_window("main").ok_or("Main window not found")?;
 
-    // إذا النافذة موجودة انتقل للرابط الجديد
-    if let Some(existing) = app.get_webview_window("browser") {
-        existing.navigate(parsed_url).map_err(|e| format!("{}", e))?;
-        sync_browser_to_main(&app);
-        return Ok(());
-    }
-
-    let main = app.get_webview_window("main").ok_or("no main")?;
-    let pos  = main.outer_position().map_err(|e| format!("{}", e))?;
-    let size = main.inner_size().map_err(|e| format!("{}", e))?;
-    let nav_h = 95_u32;
-
-    // نافذة browser تحتوي شريط الأدوات + WebView
-    WebviewWindowBuilder::new(&app, "browser", WebviewUrl::External(parsed_url.clone()))
-        .owner(&main)
-        .map_err(|e| format!("{}", e))?
-        .decorations(false)
-        .skip_taskbar(true)
-        .position(pos.x as f64, (pos.y + nav_h as i32) as f64)
-        .inner_size(size.width as f64, (size.height - nav_h) as f64)
-        .build()
-        .map_err(|e| format!("{}", e))?;
-
-    // بعد فتح النافذة ننشئ WebView داخلها للموقع
-    // سنضيفه لاحقاً عبر navigate_site command
-    let app_clone = app.clone();
-    main.on_window_event(move |event| {
-        match event {
-            tauri::WindowEvent::Moved(_) | tauri::WindowEvent::Resized(_) => {
-                sync_browser_to_main(&app_clone);
-            }
-            tauri::WindowEvent::CloseRequested { .. } => {
-                if let Some(b) = app_clone.get_webview_window("browser") {
-                    let _ = b.close();
+        let app_handle = app.clone();
+        let webview_builder = WebviewBuilder::new("browser", WebviewUrl::External(url.parse().map_err(|e| format!("Invalid URL: {}", e))?))
+            .auto_resize()
+            .on_page_load(move |_webview, payload| {
+                if let PageLoadEvent::Finished = payload.event() {
+                    let _ = app_handle.emit("url-changed", payload.url().as_str());
                 }
-            }
-            _ => {}
-        }
-    });
+            });
 
-    Ok(())
-}
-
-#[tauri::command]
-async fn go_back(app: tauri::AppHandle) -> Result<(), String> {
-    if let Some(browser) = app.get_webview_window("browser") {
-        browser
-            .eval("window.history.back();")
-            .map_err(|e| format!("{}", e))?;
+        let _webview = window.add_child(
+            webview_builder,
+            LogicalPosition::new(rect.x, rect.y),
+            LogicalSize::new(rect.width, rect.height),
+        ).map_err(|e| e.to_string())?;
     }
     Ok(())
 }
 
 #[tauri::command]
-async fn go_forward(app: tauri::AppHandle) -> Result<(), String> {
-    if let Some(browser) = app.get_webview_window("browser") {
-        browser
-            .eval("window.history.forward();")
-            .map_err(|e| format!("{}", e))?;
+async fn update_webview_rect(app: AppHandle, rect: Rect) -> Result<(), String> {
+    if let Some(webview) = app.get_webview("browser") {
+        webview.set_position(tauri::Position::Logical(LogicalPosition::new(rect.x, rect.y))).map_err(|e| e.to_string())?;
+        webview.set_size(tauri::Size::Logical(LogicalSize::new(rect.width, rect.height))).map_err(|e| e.to_string())?;
     }
     Ok(())
 }
 
 #[tauri::command]
-async fn refresh_page(app: tauri::AppHandle) -> Result<(), String> {
-    if let Some(browser) = app.get_webview_window("browser") {
-        browser
-            .eval("window.location.reload();")
-            .map_err(|e| format!("{}", e))?;
+async fn go_back(app: AppHandle) -> Result<(), String> {
+    if let Some(webview) = app.get_webview("browser") {
+        // Trying native go_back if available, else fallback to eval
+        let _ = webview.eval("window.history.back()");
     }
     Ok(())
 }
 
 #[tauri::command]
-async fn close_browser(_app: tauri::AppHandle) -> Result<(), String> {
-    std::process::exit(0);
+async fn go_forward(app: AppHandle) -> Result<(), String> {
+    if let Some(webview) = app.get_webview("browser") {
+        let _ = webview.eval("window.history.forward()");
+    }
+    Ok(())
 }
 
-#[cfg_attr(mobile, tauri::mobile_entry_point)]
+#[tauri::command]
+async fn refresh_page(app: AppHandle) -> Result<(), String> {
+    if let Some(webview) = app.get_webview("browser") {
+        webview.eval("window.location.reload()").map_err(|e| e.to_string())?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
+async fn set_opacity(_app: AppHandle, _opacity: f64) -> Result<(), String> {
+    // window.set_opacity is not available in the current tauri version/configuration.
+    Ok(())
+}
+
+#[tauri::command]
+async fn close_browser_view(app: AppHandle) -> Result<(), String> {
+    if let Some(webview) = app.get_webview("browser") {
+        webview.close().map_err(|e| e.to_string())?;
+    }
+    Ok(())
+}
+
 fn main() {
     tauri::Builder::default()
+        .setup(|app| {
+            let window = app.get_webview_window("main").unwrap();
+
+            // Listen for window resize to update child webview
+            let app_handle = app.handle().clone();
+            window.on_window_event(move |event| {
+                if let tauri::WindowEvent::Resized(_) = event {
+                    // We can't easily get the DOM rect here,
+                    // so we rely on the frontend to send us the rect after resize.
+                    let _ = app_handle.emit("window-resized", ());
+                }
+            });
+
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             navigate_to,
+            update_webview_rect,
             go_back,
             go_forward,
             refresh_page,
-            close_browser
+            set_opacity,
+            close_browser_view
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
